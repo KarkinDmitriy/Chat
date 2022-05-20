@@ -31,10 +31,12 @@ public class ChatController implements Initializable {
     private Button btnSend;
 
     public void mockAction(ActionEvent actionEvent) {
+
         System.out.println("mock");
     }
 
     public void closeApplication(ActionEvent actionEvent) {
+
         Platform.exit();
     }
 
@@ -43,13 +45,14 @@ public class ChatController implements Initializable {
         if (text == null || text.isBlank()) {
             return;
         }
-        chatArea.appendText(text + System.lineSeparator());
+
+        chatArea.appendText( contacts.getItems()+ text + System.lineSeparator());
         inputField.clear();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<String> names = List.of("Dmitriy", "Yuliya", "Aleksandr", "Anna", "Diana");
+        List<String> names = List.of("Broadcast","Dmitriy", "Yuliya", "Aleksandr", "Anna", "Diana");
         contacts.setItems(FXCollections.observableList(names));
     }
 
