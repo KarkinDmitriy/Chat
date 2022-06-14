@@ -5,7 +5,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Application extends javafx.application.Application{
+public class Application extends javafx.application.Application {
+
     public static void run(String[] args) {
         launch(args);
     }
@@ -17,6 +18,7 @@ public class Application extends javafx.application.Application{
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("May chat");
         primaryStage.show();
     }
 }
