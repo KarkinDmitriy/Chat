@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class NetworkService {
-    private static final String HOST = "127.0.0.1";
-    private static final int PORT = 8189;
+    private  final String host;
+    private  final int port;
     private DataInputStream in;
     private DataOutputStream out;
     private Socket socket;
@@ -18,15 +18,17 @@ public class NetworkService {
 
     public NetworkService(MessageProcessor messageProcessor) {
         this.messageProcessor = messageProcessor;
+        PropertyReader prop = PropertyReader.getInstance();
+        host = prop.getHost();
+        port = prop.getPort();
     }
 
     public void connect() throws IOException {
-        socket = new Socket(HOST, PORT);
+        socket = new Socket(host, port);
         in = new DataInputStream(socket.getInputStream());
         out = new DataOutputStream(socket.getOutputStream());
         readMessages();
     }
-
     private void readMessages() {
         clientThread = new Thread(() -> {
             try {
@@ -47,15 +49,12 @@ public class NetworkService {
         });
         clientThread.start();
     }
-
     public void sendMessage(String message) throws IOException {
         out.writeUTF(message);
     }
-
     public boolean isConnected() {
         return socket != null && socket.isConnected() && !socket.isClosed();
     }
-
     public void shutdown() throws IOException {
         if (clientThread != null && clientThread.isAlive()) {
             clientThread.interrupt();
